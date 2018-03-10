@@ -2,11 +2,10 @@
 
 console.log('App.js is running!');
 
-// JSX - JavaScript XML
-
 var app = {
-  title: 'Shibainu',
-  subtitle: 'shiba-shiba'
+  title: 'indecision App',
+  subtitle: 'Put your life in the hands of a computer',
+  options: ['One', 'Two']
 };
 var template = React.createElement(
   'div',
@@ -16,10 +15,15 @@ var template = React.createElement(
     null,
     app.title
   ),
-  React.createElement(
+  app.subtitle && React.createElement(
     'p',
     null,
     app.subtitle
+  ),
+  React.createElement(
+    'p',
+    null,
+    app.options.length > 0 ? 'Here are your options' : 'No options'
   ),
   React.createElement(
     'ol',
@@ -37,42 +41,50 @@ var template = React.createElement(
   )
 );
 
-var user = {
-  name: 'Andrew',
-  age: 26
+var count = 0;
+var addOne = function addOne() {
+  count++;
+  renderCounterApp();
 };
-function getLocation(location) {
-  if (location) {
-    return location;
-  } else {
-    return 'Unkonwn';
-  }
-}
-var userName = 'Mike';
-var userAge = 26;
-var userLocation = 'New York';
-var templateTwo = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    user.name
-  ),
-  React.createElement(
-    'p',
-    null,
-    'Age: ',
-    user.age
-  ),
-  React.createElement(
-    'p',
-    null,
-    'Location: ',
-    getLocation(user.location)
-  )
-);
+var minusOne = function minusOne() {
+  count--;
+  renderCounterApp();
+};
+var reset = function reset() {
+  count = 0;
+  renderCounterApp();
+};
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(templateTwo, appRoot);
+var renderCounterApp = function renderCounterApp() {
+  var templateTwo = React.createElement(
+    'div',
+    null,
+    React.createElement(
+      'h1',
+      null,
+      'Count: ',
+      count
+    ),
+    React.createElement(
+      'button',
+      { onClick: addOne },
+      '+1'
+    ),
+    React.createElement(
+      'button',
+      { onClick: minusOne },
+      '-1'
+    ),
+    React.createElement(
+      'button',
+      { onClick: reset },
+      'reset'
+    )
+  );
+
+  ReactDOM.render(templateTwo, appRoot);
+};
+
+renderCounterApp();
